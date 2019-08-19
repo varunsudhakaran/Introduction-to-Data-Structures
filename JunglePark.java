@@ -1,366 +1,248 @@
-import java.util.Random;
+/**
+ * File header comes here
+ *
+ */
+import java.util.ArrayList;
 
-//////////////////// ALL ASSIGNMENTS INCLUDE THIS SECTION /////////////////////
-
+////////////////////ALL ASSIGNMENTS INCLUDE THIS SECTION /////////////////////
 //
-
-// Title: Program1_AuditableBanking
-
-// Files: AuditableBanking.java, AuditbaleBanking
-
-// Course: CS 300, Semester 1, and Freshman
-
+//Title: Program5_JunglePark2000
+//Files: ParkGUI.java, JunglePark.java, AddAnimalButton.java
+//Button.java, ClearButton.java, Animal.java, Deer.java
+//Tiger.java, JungleParkTests.java
+//Course: CS 300, Semester 1, and Freshman
 //
-
-// Author: Varun Sudhakaran
-
-// Email: vsudhakaran@wisc.edu
-
-// Lecturer's Name: Professor Gary Dahl
-
+//Author: Varun Sudhakaran
+//Email: vsudhakaran@wisc.edu
+//Lecturer's Name: Professor Gary Dahl
 //
-
-//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ///////////////////
-
-//
-
-// Partner Name: Steve Hizmi
-
-// Partner Email: shizmi@wisc.edu
-
-// Partner Lecturer's Name: Professor Gary Dahl
-
-//
-
-// VERIFY THE FOLLOWING BY PLACING AN X NEXT TO EACH TRUE STATEMENT:
-
-// _X__ Write-up states that pair programming is allowed for this assignment.
-
-// _X__ We have both read and understand the course Pair Programming Policy.
-
-// _X__ We have registered our team prior to the team registration deadline.
-
-//
-
-///////////////////////////// CREDIT OUTSIDE HELP /////////////////////////////
-
-//
-
-// Students who get help from sources other than their partner must fully
-
-// acknowledge and credit those sources of help here. Instructors and TAs do
-
-// not need to be credited here, but tutors, friends, relatives, room mates,
-
-// strangers, and others do. If you received no outside help from either type
-
-// of source, then please explicitly indicate NONE.
-
-//
-
-// Persons: Matthew Chiang helped me with the keyPressed() method.
-
-//
-
-// Online Sources: none
-
-//
-
 /////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 
+/**
+ * Class Header comes here
+ * 
+ * @author Mouna Kacem
+ *
+ */
+public class JunglePark extends PApplet {
+  private PImage backgroundImage; 
+  // PImage object that represents the background image
+  protected ArrayList<ParkGUI> listGUI; 
+  // ArrayList storing the current graphical objects (animals
+                                        
+  // present
+  // in the Jungle Park and buttons)
 
 
-public class JunglePark {
+  /**
+   * CallBack method Defines initial 
+   * environment properties such as screen size and to load
+   * background images and fonts as 
+   * the program starts Initializes the 
+   * backgroundImage and listGUI
+   * instance fields.
+   * 
+   * @param: none
+   * 
+   * @return: none
+   * 
+   */
+  @Override
+  public void setup() {
+    this.getSurface().setTitle("Jungle Park"); 
+    // Displays text in the title of the display window
+    this.textAlign(PApplet.CENTER, PApplet.CENTER); 
+    // Sets the current alignment for drawing text
+                                                    
+    // to CENTER
+    this.imageMode(PApplet.CENTER); 
+    // Sets the location from which images are drawn to CENTER
+    this.rectMode(PApplet.CORNERS); // Sets the location from 
+    //which rectangles are drawn.
+    // rectMode(CORNERS) interprets the first 
+    //two parameters of rect() method as the location of one
+    // corner, and the third and fourth 
+    //parameters as the location of the opposite corner.
+    // rect() method draws a rectangle to the 
+    //display window
+    this.focused = true; 
+    // Confirms that our Processing program is 
+    //"focused," meaning that
+    // it is active and will accept mouse or keyboard input.
+    backgroundImage = this.loadImage("images/background.png"); 
+    // load the background image
+
+    listGUI = new ArrayList<ParkGUI>(); 
+    // create the listGUI ArrayList that would store all the
+    // graphic objects (animals and buttons) 
+    //that would be drawn on the display window
+    AddAnimalButton a1 = new AddAnimalButton("Tiger", 43, 16, this); 
+    // adds an animal button of
+    // tiger that is at (43,16) position
+    listGUI.add(a1); // a1 is added to the list
+    AddAnimalButton a2 = new AddAnimalButton("Deer", 129, 16, this); 
+    // adds an animal button of
+    // deer that is at (129,16) position
+    listGUI.add(a2); // a2 is added to the list
+    ClearButton c = new ClearButton(215, 16, this); 
+    // adds a clear button 
+    // that is at (215, 16) position
+    listGUI.add(c); // c is added to the list
+  }
+
+  /**
+   * Sets the size of the application display window
+   * 
+   * @param: none
+   * 
+   * @return: none
+   * 
+   */
+  @Override
+  public void settings() {
+    size(800, 632); // sets the size of the display window 
+    //to 800 x 632 pixels
+  }
+
+
+  /**
+   * Callback method called in an infinite loop. 
+   *It draws the Jungle Park's window display
+   * 
+   * @param: none
+   * 
+   * @return: none
+   * 
+   */
+  @Override
+  public void draw() {
+    // Set the color used for the background 
+    //of the Processing window
+    this.background(245, 255, 250);
+    // Set the mint cream color background
+    this.image(backgroundImage, this.width / 2, this.height / 2); 
+    // draw the background image at
+    // the center of the display window
+    // traverse the tigers array and draw each stored tiger
+    for (int i = 0; i < listGUI.size(); i++) 
+      // runs through the list
+      listGUI.get(i).draw(); 
+    // draws each graphical object in the list
+  }
+
+  /**
+   * Callback method called each time the user presses the mouse
+   * 
+   * @param: none
+   * 
+   * @return: none
+   * 
+   */
+  @Override
+  public void mousePressed() {
+    // traverse listGUI and call mousePressed() 
+    //of the first graphical object which the mouse is
+    // over
+    for (int i = 0; i < listGUI.size(); i++) 
+      // runs through the list
+      if (listGUI.get(i).isMouseOver()) { 
+        // checks if mouse is over
+        listGUI.get(i).mousePressed(); 
+        // presses mouse at that index
+        break; 
+        // breaks the program
+      }
+  }
+
+  /**
+   * Callback method called each time the mouse is released
+   * 
+   * @param: none
+   * 
+   * @return: none
+   * 
+   */
+  @Override
+  public void mouseReleased() {
+    // traverse listGUI and call mouseReleased() 
+    //method defined for every graphic object
+    for (int i = 0; i < listGUI.size(); i++) 
+      // runs through the list
+      listGUI.get(i).mouseReleased(); 
+    // releases the mouse at that index
+  }
+
+  /**
+   * Callback method called each time the user presses a key
+   * 
+   * @param: none
+   * 
+   * @return: none
+   * 
+   */
+  @Override
+  public void keyPressed() {
+
+    switch (Character.toUpperCase(this.key)) { 
+      // switches the uppercase of type
+      case 'T': // checks if t key is pressed
+        listGUI.add(new Tiger(this)); // adds tiger to list
+        break; // breaks the program
+      case 'D': // checks if d key is pressed
+        listGUI.add(new Deer(this)); // adds deer to list
+        break; // breaks the program
+      case 'R': // checks if r key is pressed
+        for (int i = 0; i < listGUI.size(); i++) {
+          if (listGUI.get(i) instanceof Animal 
+              && listGUI.get(i).isMouseOver()) { 
+            // remove an animal from the Jungle Park if 
+            //the mouse is over it
+            listGUI.remove(i);// traverse the listGUI
+            //list and consider only animal objects to be removed if any
+         // remove the first animal which the mouse is 
+            //over it while the r-key is pressed
+            break; // breaks the program
+          }
+        }
+    }
+    // Executes the same function but with lowercase
+  }
+
+  /**
+   * Removes all the animals from the park
+   * 
+   * @param: none
+   * 
+   * @return: none
+   * 
+   */
+  public void clear() {
+    for (int i = 0; i < listGUI.size(); i++) { 
+      // runs through list
+      if (listGUI.get(i) instanceof Animal) { 
+        // checks if animal
+        listGUI.remove(i); 
+        // removes the animal
+        i--; 
+        // decrements index
+      }
+    }
+  }
 
 
 
-  private static PApplet processing; // PApplet object that represents the graphic
-
-  // interface of the JunglePark application
-
-  private static PImage backgroundImage; // PImage object that represents the
-
-  // background image
-
-  private static Tiger[] tigers; // array storing the current tigers present
-
-  // in the Jungle Park
-
-  private static Random randGen; // Generator of random numbers
-
-
-
+  /**
+   * This main method starts the application
+   * 
+   * @param args
+   * 
+   * @return: none
+   * 
+   */
   public static void main(String[] args) {
-
-    // TODO Auto-generated method stub
-
-    Utility.startApplication();
-
-  }
-
-
-
-  /**
-   *
-   * 
-   * 
-   * // initialize the processing field to the one passed into // Set the color used for the
-   * background of the Processing window // Mint cream color // initialize and load the image of the
-   * background // Draw the background image at the center of the screen // create a Random object
-   * and store its reference in randGen
-   * 
-   * 
-   * @param processingObj
-   * 
-   *                      represents a reference to the graphical interface of the
-   * 
-   *                      application
-   * 
-   * @return none
-   * 
-   */
-
-  public static void setup(PApplet processingObj) {
-
-    processing = processingObj;
-    processing.background(245, 255, 250);
-
-    backgroundImage = processing.loadImage("images/background.png");
-
-
-    processing.image(backgroundImage, processing.width / 2, processing.height / 2);
-
-    tigers = new Tiger[8];
-
-    randGen = new Random();
-
-    tigers[0] = new Tiger(processing, (float) randGen.nextInt(processing.width),
-
-        (float) randGen.nextInt(processing.height));
-
-    tigers[0].draw();
-
-  }
-
-  /**
-   *
-   * // Set the color used for the background of the Processing window // Mint cream color //
-   * initialize and load the image of the background // Draw the background image at the center of
-   * the screen // width [resp. height]: System variable of the processing library that stores //
-   * the width [resp. height] of the display window. // Draws each element in tigers array if its
-   * not null // Draws each element in tigers array if its not null
-   * 
-   * 
-   * @param none
-   * 
-   * @return none
-   * 
-   */
-
-
-  public static void update() {
-
-
-
-    processing.background(245, 255, 250);
-
-    backgroundImage = processing.loadImage("images/background.png");
-
-
-    processing.image(backgroundImage, processing.width / 2, processing.height / 2);
-
-    for (int i = 0; i < tigers.length; i++) {
-
-      if (tigers[i] != null) {
-
-        tigers[i].draw();
-
-      }
-
-    }
-  }
-
-  /*
-   * // gets tiger image width // gets tiger image height // sets range for mouse on the x axis //
-   * sets range for mouse on the y axis // if mouse is in range, return true // if mouse is not in
-   * range, return false
-   * 
-   * @param: tiger object
-   * 
-   * @return: boolean
-   * 
-   * 
-   */
-
-
-  public static boolean isMouseOver(Tiger tiger) {
-
-
-
-    int width = tiger.getImage().width;
-
-    int height = tiger.getImage().height;
-
-
-
-    if (processing.mouseX >= tiger.getPositionX() - width / 2
-
-        && processing.mouseX <= tiger.getPositionX() + width / 2) {
-
-
-
-      if (processing.mouseY >= tiger.getPositionY() - height / 2
-
-          && processing.mouseY <= tiger.getPositionY() + height / 2) {
-
-
-
-        return true;
-
-      }
-
-    }
-
-
-
-    return false;
-
-  }
-
-  /*
-   * // goes thru each element, and if not null and mouse is over tiger, dragging is // set to true
-   * // if mouse is not in range of certain tiger, dragging is set to false
-   * 
-   * @param: none
-   * 
-   * @return: none
-   */
-
-
-
-  public static void mouseDown() {
-
-
-
-    for (int i = 0; i < tigers.length; i++) {
-
-      if (tigers[i] != null) {
-
-        if (isMouseOver(tigers[i]) == true) {
-
-          tigers[i].setDragging(true);
-
-        }
-
-
-
-        else {
-
-
-
-          tigers[i].setDragging(false);
-
-        }
-
-
-
-      }
-
-    }
-
-  }
-
-  /*
-   * // goes through each element in tigers array, if tiger is not null, dragging is // set to false
-   * 
-   * @param: none
-   * 
-   * @return: none
-   */
-
-
-  public static void mouseUp() {
-
-
-
-    for (int i = 0; i < tigers.length; i++) {
-
-      if (tigers[i] != null) {
-
-        tigers[i].setDragging(false);
-
-      }
-
-    }
-
-  }
-
-  /*
-   * // if element is created, keepGoing is set to false to stop the keyPressed // method // if
-   * tiger is null and keepGoing is true, a tiger image is created // if tiger is not null,
-   * isMouseOver returns true or false if mouse is over // tiger, then that tiger is set to null to
-   * delete it
-   * 
-   * @param: none
-   * 
-   * @return: none
-   * 
-   */
-
-  public static void keyPressed() {
-
-
-
-    boolean keepGoing = true;
-
-
-
-    if (processing.key == 't' || processing.key == 'T') {
-
-
-
-      for (int i = 0; i < tigers.length; i++) {
-
-        if (tigers[i] == null && keepGoing == true) {
-
-          tigers[i] = new Tiger(processing, (float) randGen.nextInt(processing.width),
-
-              (float) randGen.nextInt(processing.height));
-
-          tigers[i].draw();
-
-          keepGoing = false;
-
-          if (keepGoing = false) {
-
-            break;
-
-          }
-
-        }
-
-      }
-
-    }
-
-
-    if (processing.key == 'r' || processing.key == 'R') {
-
-      for (int i = tigers.length - 1; i >= 0; i--) {
-
-        if (tigers[i] != null) {
-
-          if (isMouseOver(tigers[i]) == true) {
-
-            tigers[i] = null;
-
-          }
-
-        }
-
-      }
-
-    }
+    // starts the application (calls PApplet main() 
+    //method with the name
+    // of the PApplet class to run as parameter)
+    PApplet.main("JunglePark");
   }
 }
-
